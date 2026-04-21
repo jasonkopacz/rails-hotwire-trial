@@ -30,11 +30,13 @@ RSpec.describe "Likes" do
         }.to change(Like, :count).by(1)
       end
 
-      it "returns unprocessable_entity when already liked" do
+      it "is idempotent when already liked — does not create a duplicate" do
         create(:like, user: user, photo: photo)
-        post photo_likes_path(photo),
-             headers: { "Accept" => "text/vnd.turbo-stream.html" }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect {
+          post photo_likes_path(photo),
+               headers: { "Accept" => "text/vnd.turbo-stream.html" }
+        }.not_to change(Like, :count)
+        expect(response).to have_http_status(:ok)
       end
     end
   end
@@ -60,13 +62,14 @@ RSpec.describe "Likes" do
         expect(Like.exists?(like.id)).to be false
       end
 
-      it "cannot delete another user's like (IDOR protection)" do
+      it "cannot delete another user's like" do
         other_user = create(:user)
         other_like = create(:like, user: other_user, photo: photo)
         expect {
           delete like_path(other_like),
                  headers: { "Accept" => "text/vnd.turbo-stream.html" }
         }.not_to change(Like, :count)
+        expect(response).to have_http_status(:not_found)
       end
     end
   end

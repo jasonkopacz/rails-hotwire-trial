@@ -22,12 +22,22 @@ RSpec.describe "Sessions" do
         post login_path, params: { email: user.email, password: "password123" }
         expect(response).to redirect_to(photos_path)
       end
+
+      it "resets the session on login to prevent session fixation" do
+        get login_path
+        cookie_before = response.cookies["_photo_gallery_session"]
+
+        post login_path, params: { email: user.email, password: "password123" }
+        cookie_after = response.cookies["_photo_gallery_session"]
+
+        expect(cookie_after).not_to eq(cookie_before)
+      end
     end
 
     context "with invalid credentials" do
       it "re-renders the login page with 422" do
         post login_path, params: { email: user.email, password: "wrong" }
-        expect(response).to have_http_status(:unprocessable_entity)
+        expect(response).to have_http_status(:unprocessable_content)
       end
 
       it "does not sign in the user" do

@@ -24,6 +24,19 @@ RSpec.describe "Photos" do
         get photos_path
         expect(response.body).to include("photo-card")
       end
+
+      it "renders the like button in unliked state when user has not liked the photo" do
+        create(:photo)
+        get photos_path
+        expect(response.body).to include('aria-label="Like photo"')
+      end
+
+      it "renders the like button in liked state when user has liked the photo" do
+        photo = create(:photo)
+        create(:like, user: user, photo: photo)
+        get photos_path
+        expect(response.body).to include('aria-label="Unlike photo"')
+      end
     end
   end
 end

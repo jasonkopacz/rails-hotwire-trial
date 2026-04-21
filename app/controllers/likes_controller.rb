@@ -3,7 +3,7 @@ class LikesController < ApplicationController
   before_action :set_like,  only: [:destroy]
 
   def create
-    current_user.likes.find_or_create_by(photo: @photo)
+    current_user.likes.create_or_find_by(photo: @photo)
     @photo.likes.reload
     respond_to do |format|
       format.turbo_stream

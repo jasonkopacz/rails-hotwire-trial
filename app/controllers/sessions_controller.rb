@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       redirect_to photos_path, notice: "Welcome back, #{user.name}!"
     else
       flash.now[:alert] = "Invalid email or password."
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 

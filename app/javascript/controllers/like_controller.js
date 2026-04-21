@@ -4,7 +4,6 @@ import { Controller } from "@hotwired/stimulus"
 // on click, then lets the Turbo Stream response replace the element with server truth.
 export default class extends Controller {
   static targets = ["count"]
-  static values  = { liked: Boolean }
 
   optimisticToggle(event) {
     const btn       = this.element.querySelector(".like-btn")

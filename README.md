@@ -33,7 +33,7 @@ Two users are seeded automatically:
 
 | Email             | Password    |
 | ----------------- | ----------- |
-| alice@example.com | password123 |
+| jason@example.com | password123 |
 | bob@example.com   | password123 |
 
 ## Running Tests
@@ -70,5 +70,5 @@ Photos are seeded from `photos.csv` at setup time using Ruby's standard `CSV` li
 
 ### Security
 
-- Like `destroy` is scoped to `current_user.likes.find(params[:id])`, preventing IDOR — a user cannot delete another user's like by guessing an ID.
+- Like `destroy` is scoped to `current_user.likes.find(params[:id])`, a user cannot delete another user's like.
 - Database-level uniqueness constraint on `[user_id, photo_id]` in the `likes` table, backed by a model validation, prevents duplicate likes.

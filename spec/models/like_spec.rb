@@ -17,6 +17,18 @@ RSpec.describe Like do
     end
   end
 
+  describe "presence validations" do
+    it "is invalid without a user" do
+      like = build(:like, user: nil)
+      expect(like).not_to be_valid
+    end
+
+    it "is invalid without a photo" do
+      like = build(:like, photo: nil)
+      expect(like).not_to be_valid
+    end
+  end
+
   describe "uniqueness constraint" do
     let(:user)  { create(:user) }
     let(:photo) { create(:photo) }

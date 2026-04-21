@@ -28,6 +28,31 @@ RSpec.describe Photo do
       photo.src_medium = nil
       expect(photo).not_to be_valid
     end
+
+    it "requires src_medium to be an http/https URL" do
+      photo.src_medium = "javascript:alert(1)"
+      expect(photo).not_to be_valid
+    end
+
+    it "requires source_url to be an http/https URL when present" do
+      photo.source_url = "javascript:alert(1)"
+      expect(photo).not_to be_valid
+    end
+
+    it "allows blank source_url" do
+      photo.source_url = nil
+      expect(photo).to be_valid
+    end
+
+    it "requires photographer_url to be an http/https URL when present" do
+      photo.photographer_url = "data:text/html,<h1>XSS</h1>"
+      expect(photo).not_to be_valid
+    end
+
+    it "allows blank photographer_url" do
+      photo.photographer_url = nil
+      expect(photo).to be_valid
+    end
   end
 
   describe "#liked_by?" do
@@ -35,7 +60,7 @@ RSpec.describe Photo do
     let(:user)  { create(:user) }
 
     it "returns false when the user has not liked the photo" do
-      photo.likes.load  # simulate includes(:likes)
+      photo.likes.load
       expect(photo.liked_by?(user)).to be false
     end
 

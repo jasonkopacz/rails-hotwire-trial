@@ -1,7 +1,6 @@
 <div id="like-button-<%= photo.id %>"
      class="like-button"
-     data-controller="like"
-     data-like-liked-value="<%= photo.liked_by?(current_user) %>">
+     data-controller="like">
 
   <% like = photo.likes.find { |l| l.user_id == current_user&.id } %>
 

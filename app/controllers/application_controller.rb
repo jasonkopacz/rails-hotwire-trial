@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def log_in(user)
+    reset_session
     session[:user_id] = user.id
   end
 

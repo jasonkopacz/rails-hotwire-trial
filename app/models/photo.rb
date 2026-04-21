@@ -4,7 +4,9 @@ class Photo < ApplicationRecord
 
   validates :external_id, presence: true, uniqueness: true
   validates :photographer, presence: true
-  validates :src_medium, presence: true
+  validates :src_medium, presence: true, format: { with: /\Ahttps?:\/\//i }
+  validates :source_url, format: { with: /\Ahttps?:\/\//i }, allow_blank: true
+  validates :photographer_url, format: { with: /\Ahttps?:\/\//i }, allow_blank: true
 
   def liked_by?(user)
     return false unless user
