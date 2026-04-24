@@ -104,7 +104,7 @@ Most candidates complete the core requirements in 2–4 hours. If you run out of
 2. Build your application in the fork (the Rails app can live at the repo root or in a subdirectory)
 3. Include setup instructions in your README so we can run it locally
 4. Open a pull request back to this repository
-5. Add the following reviewers: `@imjamescrain`, `@jlien`, `@nickcluc`, `@rymccue`
+5. Email your recruiter point of contact
 
 Questions? Reach out to nick.clucas@movewithclever.com
 
